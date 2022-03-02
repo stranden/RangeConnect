@@ -1,20 +1,29 @@
+from ..messaging import publisher
+import settings
 class SiusMessageParser:
     
     async def message_parser(self,message):
         scoreEventType = message.split(";")[0]
+        Publish = publisher.Publisher(settings.RABBITMQ_URI, settings.RANGE_TYPE)
         if scoreEventType == "_GRPH":
-            await self.group_event(message)
+            result = await self.group_event(message)
+            await Publish.publish_range_events(result)
         elif scoreEventType == "_NAME":
-            await self.name_event(message)
+            result = await self.name_event(message)
+            await Publish.publish_range_events(result)
         elif scoreEventType == "_PRCH":
-            await self.practice_event(message)
+            result = await self.practice_event(message)
+            await Publish.publish_range_events(result)
         elif scoreEventType == "_SHOT":
-            await self.shot_event(message)
+            result = await self.shot_event(message)
+            await Publish.publish_range_events(result)
         elif scoreEventType == "_SNAT":
-            await self.nation_event(message)
+            result =  await self.nation_event(message)
+            await Publish.publish_range_events(result)
         elif scoreEventType == "_TEAM":
-            await self.team_event(message)
-
+            result = await self.team_event(message)
+            await Publish.publish_range_events(result)
+        
 
     async def group_event(self,message):
         eventData = message.split(";")
@@ -98,7 +107,7 @@ class SiusMessageParser:
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['shooterNation'] = str.rstrip(eventData[5])
-            print(eventDict)
+            #print(eventDict)
             return eventDict
 
     async def team_event(self,message):
