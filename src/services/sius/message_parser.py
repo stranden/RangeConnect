@@ -29,6 +29,7 @@ class SiusMessageParser:
         eventData = message.split(";")
         if len(eventData) == 15:
             eventDict = dict()
+            eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("GROUP")
             eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
@@ -51,6 +52,7 @@ class SiusMessageParser:
         eventData = message.split(";")
         if len(eventData) == 6:
             eventDict = dict()
+            eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("NAME")
             eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
@@ -63,6 +65,7 @@ class SiusMessageParser:
         eventData = message.split(";")
         if len(eventData) == 26:
             eventDict = dict()
+            eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("PRACTICE")
             eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
@@ -80,6 +83,7 @@ class SiusMessageParser:
         eventData = message.split(";")
         if len(eventData) == 24:
             eventDict = dict()
+            eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("SHOT")
             eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
@@ -102,6 +106,7 @@ class SiusMessageParser:
         eventData = message.split(";")
         if len(eventData) == 6:
             eventDict = dict()
+            eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("NATION")
             eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
@@ -114,6 +119,7 @@ class SiusMessageParser:
         eventData = message.split(";")
         if len(eventData) == 6:
             eventDict = dict()
+            eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("TEAM")
             eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
