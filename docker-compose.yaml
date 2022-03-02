@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  rangeconnect:
+  shooting-range:
     build: .
     hostname: 'range-connect_shooting-range'
     container_name: 'range-connect_shooting-range'
