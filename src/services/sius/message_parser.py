@@ -1,8 +1,10 @@
 from ..messaging import publisher
 import settings
+import logging
 class SiusMessageParser:
 
     async def message_parser(self,message):
+        logging.info("Recieved message from shooting range")
         scoreEventType = message.split(";")[0]
         Publish = publisher.Publisher(settings.RABBITMQ_URI, settings.RANGE_TYPE)
         if scoreEventType == "_GRPH":
@@ -23,6 +25,8 @@ class SiusMessageParser:
         elif scoreEventType == "_TEAM":
             result = await self.team_event(message)
             await Publish.publish_range_events(result)
+        else:
+            logging.warning(f"Could not process event type - message: {str(message).rstrip()}")
         
     async def group_event(self,message):
         eventData = message.split(";")
@@ -44,8 +48,7 @@ class SiusMessageParser:
             elif int(eventData[10]) == 2:
                 eventDict['firingType'] = str("RAPID_FIRE")
             eventDict['expectedNumberOfShots'] = int(eventData[11])
-            #await logger.info("Received GROUP event from shooting range")
-            print(eventDict)
+            logging.info(f"Processed GROUP event: {eventDict}")
             return eventDict
 
     async def name_event(self,message):
@@ -58,7 +61,7 @@ class SiusMessageParser:
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['shooterName'] = str.rstrip(eventData[5])
-            print(eventDict)
+            logging.info(f"Processed NAME event: {eventDict}")
             return eventDict
     
     async def practice_event(self,message):
@@ -76,7 +79,7 @@ class SiusMessageParser:
             eventDict['practiceSequenceNumber'] = int(eventData[11])
             eventDict['shootCode'] = int(eventData[13])
             eventDict['practiceCode'] = int(eventData[14])
-            print(eventDict)
+            logging.info(f"Processed PRACTICE event: {eventDict}")
             return eventDict
 
     async def shot_event(self,message):
@@ -99,7 +102,7 @@ class SiusMessageParser:
             eventDict['yCoord'] = float(eventData[15])
             eventDict['shotTimestamp'] = int(eventData[20])
             eventDict['caliber'] = int(eventData[22])
-            print(eventDict)
+            logging.info(f"Processed SHOT event: {eventDict}")
             return eventDict
 
     async def nation_event(self,message):
@@ -112,7 +115,7 @@ class SiusMessageParser:
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['shooterNation'] = str.rstrip(eventData[5])
-            print(eventDict)
+            logging.info(f"Processed NATION event: {eventDict}")
             return eventDict
 
     async def team_event(self,message):
@@ -125,7 +128,7 @@ class SiusMessageParser:
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['shooterTeam'] = str.rstrip(eventData[5])
-            print(eventDict)
+            logging.info(f"Processed TEAM event: {eventDict}")
             return eventDict
 
     
