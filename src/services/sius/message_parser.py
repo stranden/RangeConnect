@@ -1,7 +1,7 @@
 from ..messaging import publisher
 import settings
 class SiusMessageParser:
-    
+
     async def message_parser(self,message):
         scoreEventType = message.split(";")[0]
         Publish = publisher.Publisher(settings.RABBITMQ_URI, settings.RANGE_TYPE)
@@ -24,7 +24,6 @@ class SiusMessageParser:
             result = await self.team_event(message)
             await Publish.publish_range_events(result)
         
-
     async def group_event(self,message):
         eventData = message.split(";")
         if len(eventData) == 15:
@@ -45,6 +44,7 @@ class SiusMessageParser:
             elif int(eventData[10]) == 2:
                 eventDict['firingType'] = str("RAPID_FIRE")
             eventDict['expectedNumberOfShots'] = int(eventData[11])
+            #await logger.info("Received GROUP event from shooting range")
             print(eventDict)
             return eventDict
 
@@ -112,7 +112,7 @@ class SiusMessageParser:
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['shooterNation'] = str.rstrip(eventData[5])
-            #print(eventDict)
+            print(eventDict)
             return eventDict
 
     async def team_event(self,message):

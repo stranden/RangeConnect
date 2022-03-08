@@ -32,4 +32,4 @@ class Publisher:
                 message,
                 routing_key=routing_key
             )
-            print(f"{message}")
+            #print(f"{message}")
