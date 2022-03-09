@@ -4,29 +4,32 @@ import logging
 class SiusMessageParser:
 
     async def message_parser(self,message):
-        logging.info("Recieved message from shooting range")
-        scoreEventType = message.split(";")[0]
-        Publish = publisher.Publisher(settings.RABBITMQ_URI, settings.RANGE_TYPE)
-        if scoreEventType == "_GRPH":
-            result = await self.group_event(message)
-            await Publish.publish_range_events(result)
-        elif scoreEventType == "_NAME":
-            result = await self.name_event(message)
-            await Publish.publish_range_events(result)
-        elif scoreEventType == "_PRCH":
-            result = await self.practice_event(message)
-            await Publish.publish_range_events(result)
-        elif scoreEventType == "_SHOT":
-            result = await self.shot_event(message)
-            await Publish.publish_range_events(result)
-        elif scoreEventType == "_SNAT":
-            result =  await self.nation_event(message)
-            await Publish.publish_range_events(result)
-        elif scoreEventType == "_TEAM":
-            result = await self.team_event(message)
-            await Publish.publish_range_events(result)
+        if message:
+            scoreEventType = message.split(";")[0]
+            Publish = publisher.Publisher(settings.RABBITMQ_URI, settings.RANGE_TYPE)
+            if scoreEventType == "_GRPH":
+                result = await self.group_event(message)
+                await Publish.publish_range_events(result)
+            elif scoreEventType == "_NAME":
+                result = await self.name_event(message)
+                await Publish.publish_range_events(result)
+            elif scoreEventType == "_PRCH":
+                result = await self.practice_event(message)
+                await Publish.publish_range_events(result)
+            elif scoreEventType == "_SHOT":
+                result = await self.shot_event(message)
+                await Publish.publish_range_events(result)
+            elif scoreEventType == "_SNAT":
+                result =  await self.nation_event(message)
+                await Publish.publish_range_events(result)
+            elif scoreEventType == "_TEAM":
+                result = await self.team_event(message)
+                await Publish.publish_range_events(result)
+            else:
+                logging.warning(f"Could not process event type - message: {str(message).rstrip()}")
         else:
-            logging.warning(f"Could not process event type - message: {str(message).rstrip()}")
+            logging.error("Message in 'message_parser' is empty - aborting!")
+            raise Exception(f"ABORTING! Message in 'message_parser' is empty - connection to shooting range is lost!")
         
     async def group_event(self,message):
         eventData = message.split(";")

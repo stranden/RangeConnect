@@ -4,9 +4,12 @@ services:
     build: .
     hostname: 'range-connect_shooting-range'
     container_name: 'range-connect_shooting-range'
+    depends_on:
+      - rabbitmq
+    restart: always
     environment:
       - RANGE_TYPE=sius
-      - SIUSDATA_HOST=192.168.234.250
+      - SIUSDATA_HOST=192.168.1.74
       - SIUSDATA_PORT=4000
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_USER=rangeconnect
