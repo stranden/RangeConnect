@@ -18,8 +18,6 @@ async def tcp_client():
 
             await SiusMessageParser.message_parser(data.decode(encoding="iso-8859-1"))
 
-            #Publish = services.messaging.publisher.Publisher(settings.RABBITMQ_URI, settings.RANGE_TYPE)
-            #await Publish.publish_range_events(message)
     else:
         logging.error(f"RANGE_TYPE is NOT supported - value: \"{settings.RANGE_TYPE}\"")
 
