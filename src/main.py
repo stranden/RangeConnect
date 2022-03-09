@@ -5,14 +5,14 @@ from util import *
 
 
 async def tcp_client():
-    logging.info(f"RANGE_TYPE is: \"{settings.RANGE_TYPE}\"")
+    logging.info(f"RANGE_TYPE is: \"{str(settings.RANGE_TYPE).upper()}\"")
     if settings.RANGE_TYPE == "sius":
         logging.info("Connecting to shooting range")
         reader, writer = await asyncio.streams.open_connection(
             settings.SIUSDATA_HOST, settings.SIUSDATA_PORT)
 
         SiusMessageParser = services.sius.message_parser.SiusMessageParser()
-        
+
         while(True):
             data = await reader.readline()
 
