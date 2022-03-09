@@ -1,2 +1,2 @@
-# RangeConnect
-Connect to a shooting range and process shots
+# RangeConnectClient
+Client for connecting to a shooting range and process events
