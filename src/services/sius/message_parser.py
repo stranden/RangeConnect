@@ -6,7 +6,7 @@ class SiusMessageParser:
     async def message_parser(self,message):
         if message:
             scoreEventType = message.split(";")[0]
-            Publish = publisher.Publisher(settings.RABBITMQ_URI, settings.RANGE_TYPE)
+            Publish = publisher.Publisher(settings.RABBITMQ_URI)
             if scoreEventType == "_GRPH":
                 result = await self.group_event(message)
                 await Publish.publish_range_events(result)

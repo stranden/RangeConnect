@@ -2,14 +2,14 @@ version: "3.8"
 services:
   shooting-range:
     build: .
-    hostname: 'range-connect_shooting-range'
-    container_name: 'range-connect_shooting-range'
+    hostname: 'rangeconnectclient_shooting-range'
+    container_name: 'rangeconnectclient_shooting-range'
     depends_on:
       - rabbitmq
     restart: always
     environment:
       - RANGE_TYPE=sius
-      - SIUSDATA_HOST=192.168.1.74
+      - SIUSDATA_HOST=192.168.234.131
       - SIUSDATA_PORT=4000
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_USER=rangeconnect
@@ -19,8 +19,8 @@ services:
       - range-connect
   rabbitmq:
     image: rabbitmq:3-management
-    hostname: 'range-connect_rabbitmq'
-    container_name: 'range-connect_rabbitmq'
+    hostname: 'rangeconnectclient_rabbitmq'
+    container_name: 'rangeconnectclient_rabbitmq'
     restart: always
     environment:
       - RABBITMQ_DEFAULT_USER=rangeconnect
