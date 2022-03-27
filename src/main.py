@@ -1,4 +1,5 @@
 import asyncio
+from asyncore import loop
 import settings
 import services.sius.message_parser
 from util import *
@@ -8,8 +9,13 @@ async def tcp_client():
     logging.info(f"RANGE_TYPE is: \"{str(settings.RANGE_TYPE).upper()}\"")
     if settings.RANGE_TYPE == "sius":
         logging.info("Connecting to shooting range")
-        reader, writer = await asyncio.streams.open_connection(
-            settings.SIUSDATA_HOST, settings.SIUSDATA_PORT)
+
+        connection = await asyncio.streams.open_connection(
+            settings.SIUSDATA_HOST,
+            settings.SIUSDATA_PORT
+        )
+        
+        reader, writer = await asyncio.wait_for(connection, timeout=60)
 
         SiusMessageParser = services.sius.message_parser.SiusMessageParser()
 

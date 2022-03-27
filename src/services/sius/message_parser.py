@@ -126,12 +126,12 @@ class SiusMessageParser:
         if len(eventData) == 6:
             eventDict = dict()
             eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
-            eventDict['scoreEventType'] = str("TEAM")
+            eventDict['scoreEventType'] = str("CLASS")
             eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['shooterTeam'] = str.rstrip(eventData[5])
-            logging.info(f"Processed TEAM event: {eventDict}")
+            logging.info(f"Processed CLASS event: {eventDict}")
             return eventDict
 
     
