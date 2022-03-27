@@ -15,7 +15,7 @@ async def tcp_client():
             settings.SIUSDATA_PORT
         )
         
-        reader, writer = await asyncio.wait_for(connection, timeout=60)
+        reader, writer = connection
 
         SiusMessageParser = services.sius.message_parser.SiusMessageParser()
 
