@@ -51,7 +51,7 @@ class SiusMessageParser:
             elif int(eventData[10]) == 2:
                 eventDict['firingType'] = str("RAPID_FIRE")
             eventDict['expectedNumberOfShots'] = int(eventData[11])
-            logging.info(f"Processed GROUP event: {eventDict}")
+            logging.info(f"Processed GROUP (_GRPH) event: {eventDict}")
             return eventDict
 
     async def name_event(self,message):
@@ -64,7 +64,7 @@ class SiusMessageParser:
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['shooterName'] = str.rstrip(eventData[5])
-            logging.info(f"Processed NAME event: {eventDict}")
+            logging.info(f"Processed NAME (_NAME) event: {eventDict}")
             return eventDict
     
     async def practice_event(self,message):
@@ -82,7 +82,7 @@ class SiusMessageParser:
             eventDict['practiceSequenceNumber'] = int(eventData[11])
             eventDict['shootCode'] = int(eventData[13])
             eventDict['practiceCode'] = int(eventData[14])
-            logging.info(f"Processed PRACTICE event: {eventDict}")
+            logging.info(f"Processed PRACTICE (_PRCH) event: {eventDict}")
             return eventDict
 
     async def shot_event(self,message):
@@ -105,7 +105,7 @@ class SiusMessageParser:
             eventDict['yCoord'] = float(eventData[15])
             eventDict['shotTimestamp'] = int(eventData[20])
             eventDict['caliber'] = int(eventData[22])
-            logging.info(f"Processed SHOT event: {eventDict}")
+            logging.info(f"Processed SHOT (_SHOT) event: {eventDict}")
             return eventDict
 
     async def nation_event(self,message):
@@ -113,12 +113,12 @@ class SiusMessageParser:
         if len(eventData) == 6:
             eventDict = dict()
             eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
-            eventDict['scoreEventType'] = str("NATION")
+            eventDict['scoreEventType'] = str("TEAM")
             eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['shooterNation'] = str.rstrip(eventData[5])
-            logging.info(f"Processed NATION event: {eventDict}")
+            logging.info(f"Processed TEAM (_SNAT) event: {eventDict}")
             return eventDict
 
     async def team_event(self,message):
@@ -131,7 +131,7 @@ class SiusMessageParser:
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['shooterTeam'] = str.rstrip(eventData[5])
-            logging.info(f"Processed CLASS event: {eventDict}")
+            logging.info(f"Processed CLASS (_TEAM) event: {eventDict}")
             return eventDict
 
     
