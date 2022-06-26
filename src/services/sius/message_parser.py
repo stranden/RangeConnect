@@ -10,6 +10,9 @@ class SiusMessageParser:
             if scoreEventType == "_GRPH":
                 result = await self.group_event(message)
                 await Publish.publish_range_events(result)
+            elif scoreEventType == "_SHID":
+                result = await self.shooter_event(message)
+                await Publish.publish_range_events(result)
             elif scoreEventType == "_NAME":
                 result = await self.name_event(message)
                 await Publish.publish_range_events(result)
@@ -37,7 +40,7 @@ class SiusMessageParser:
             eventDict = dict()
             eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("GROUP")
-            eventDict['laneID'] = int(eventData[1])
+            ##eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['sequenceNumber'] = int(eventData[5])
@@ -54,13 +57,27 @@ class SiusMessageParser:
             logging.info(f"Processed GROUP (_GRPH) event: {eventDict}")
             return eventDict
 
+    async def shooter_event(self,message):
+        eventData = message.split(";")
+        if len(eventData) == 6:
+            eventDict = dict()
+            eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
+            eventDict['scoreEventType'] = str("SHOOTER")
+            ##eventDict['laneID'] = int(eventData[1])
+            eventDict['firingPointID'] = int(eventData[2])
+            eventDict['shooterID'] = int(eventData[3])
+            eventDict['aRandomNumber'] = int(eventData[4])
+            eventDict['duplicate-shooterID'] = int(eventData[5])
+            logging.info(f"Processed SHOOTER (_SHID) event: {eventDict}")
+            return eventDict
+
     async def name_event(self,message):
         eventData = message.split(";")
         if len(eventData) == 6:
             eventDict = dict()
             eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("NAME")
-            eventDict['laneID'] = int(eventData[1])
+            ##eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['shooterName'] = str.rstrip(eventData[5])
@@ -73,7 +90,7 @@ class SiusMessageParser:
             eventDict = dict()
             eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("PRACTICE")
-            eventDict['laneID'] = int(eventData[1])
+            ##eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['sequenceNumber'] = int(eventData[5])
@@ -91,7 +108,7 @@ class SiusMessageParser:
             eventDict = dict()
             eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("SHOT")
-            eventDict['laneID'] = int(eventData[1])
+            ##eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
             eventDict['sequenceNumber'] = int(eventData[5])
@@ -114,10 +131,10 @@ class SiusMessageParser:
             eventDict = dict()
             eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("TEAM")
-            eventDict['laneID'] = int(eventData[1])
+            ##eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
-            eventDict['shooterNation'] = str.rstrip(eventData[5])
+            eventDict['shooterTeam'] = str.rstrip(eventData[5])
             logging.info(f"Processed TEAM (_SNAT) event: {eventDict}")
             return eventDict
 
@@ -127,10 +144,10 @@ class SiusMessageParser:
             eventDict = dict()
             eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
             eventDict['scoreEventType'] = str("CLASS")
-            eventDict['laneID'] = int(eventData[1])
+            ##eventDict['laneID'] = int(eventData[1])
             eventDict['firingPointID'] = int(eventData[2])
             eventDict['shooterID'] = int(eventData[3])
-            eventDict['shooterTeam'] = str.rstrip(eventData[5])
+            eventDict['shooterClass'] = str.rstrip(eventData[5])
             logging.info(f"Processed CLASS (_TEAM) event: {eventDict}")
             return eventDict
 
