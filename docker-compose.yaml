@@ -9,7 +9,7 @@ services:
     restart: always
     environment:
       - RANGE_TYPE=sius
-      - SIUSDATA_HOST=192.168.30.128
+      - SIUSDATA_HOST=192.168.234.253
       - SIUSDATA_PORT=4000
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_USER=rangeconnect
