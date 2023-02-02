@@ -16,7 +16,8 @@ class Publisher:
 
             # Declaring queue
             await channel.declare_queue(
-                queue_name
+                queue_name,
+                durable=True
             )
 
             message_body = json.dumps(message).encode()
