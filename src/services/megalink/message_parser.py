@@ -13,7 +13,7 @@ class MegalinkMessageParser:
             Publish = publisher.Publisher(settings.RABBITMQ_URI)
             if scoreEventType == "SHOT":
                 result = await self.shot_event(message)
-                #await Publish.publish_range_events(result)
+                await Publish.publish_range_events(result)
             else:
                 logging.warning(f"Could not process event type - message: {str(message).rstrip()}")
         else:
@@ -37,6 +37,13 @@ class MegalinkMessageParser:
             shot = responseData['result'][0]['shots'][numberOfShots-1]
             logging.info(f"Logging TV response: {responseData}")
             logging.info(f"Logging parsed TV response: {shot}")
+
+            eventDict['shotValue'] = responseData['result'][0]['shots'][numberOfShots-1]['v']
+            eventDict['shotValueDecimal'] = responseData['result'][0]['shots'][numberOfShots-1]['vd']
+            eventDict['shotID'] = int(responseData['result'][0]['shots'][numberOfShots-1]['nr'])
+            eventDict['xCoord'] = float(responseData['result'][0]['shots'][numberOfShots-1]['x'])
+            eventDict['yCoord'] = float(responseData['result'][0]['shots'][numberOfShots-1]['y'])
+
 
         logging.info(f"Processed SHOT (SHOT) event: {eventDict}")
         return eventDict        
