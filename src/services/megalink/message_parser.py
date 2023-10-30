@@ -1,7 +1,7 @@
 from ..messaging import publisher
+import aiohttp
 import json
 import logging
-import requests
 import settings
 
 class MegalinkMessageParser:
@@ -28,13 +28,19 @@ class MegalinkMessageParser:
         eventDict['scoreEventType'] = str("SHOT")
         eventDict['firingPointID'] = int(eventData['params']['lane'])
 
-        response = requests.get(f"{settings.MLRANGE_HTTP_URI}/get?method=fp&params=[\"{eventDict['firingPointID']}\"]&id=1")
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"{settings.MLRANGE_HTTP_URI}/get?method=fp&params=[\"{eventDict['firingPointID']}\"]&id=1") as response:
+                responseData = await response.json()
 
-        if response.status_code == 200:
+        if response.status == 200:
+
+            # Remove this log entry after testing phase
             logging.info("Send a response to TV server")
-            responseData = response.json()
+
             numberOfShots = len(responseData['result'][0]['shots'])
             shot = responseData['result'][0]['shots'][numberOfShots-1]
+
+            # Remove this log entry after testing phase
             logging.info(f"Logging TV response: {responseData}")
             logging.info(f"Logging parsed TV response: {shot}")
 
