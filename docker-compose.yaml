@@ -8,9 +8,11 @@ services:
       - rabbitmq
     restart: always
     environment:
-      - RANGE_TYPE=sius
-      - SIUSDATA_HOST=192.168.234.253
+      - RANGE_TYPE=megalink
+      - SIUSDATA_HOST=192.168.234.147
       - SIUSDATA_PORT=4000
+      - MLRANGE_HOST=192.168.234.147
+      - MLRANGE_PORT=8088
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_USER=rangeconnect
       - RABBITMQ_PASS=Uivq9ACXS49W

@@ -7,6 +7,11 @@ RANGE_TYPE = os.getenv("RANGE_TYPE", default="sius")
 SIUSDATA_HOST = os.getenv("SIUSDATA_HOST", default="localhost")
 SIUSDATA_PORT = os.getenv("SIUSDATA_PORT", default=4000)
 
+# MEGALINK MLRange
+MLRANGE_HOST = os.getenv("MLRANGE_HOST", default="localhost")
+MLRANGE_PORT = os.getenv("MLRANGE_PORT", default=8088)
+MLRANGE_URI = f"ws://{MLRANGE_HOST}:{MLRANGE_PORT}/tv/ws"
+
 # RabbitMQ
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", default="localhost")
 RABBITMQ_USER = os.getenv("RABBITMQ_USER", default="rangeconnect")
