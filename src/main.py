@@ -27,7 +27,6 @@ async def sius_client_writer(writer):
 
 async def mlrange_websocket():
     if settings.RANGE_TYPE == "megalink":
-        logging.info("MLRANGE WebSocket")
 
         MegalinkMessageParser = services.megalink.message_parser.MegalinkMessageParser()
 
