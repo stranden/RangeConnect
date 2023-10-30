@@ -10,7 +10,8 @@ SIUSDATA_PORT = os.getenv("SIUSDATA_PORT", default=4000)
 # MEGALINK MLRange
 MLRANGE_HOST = os.getenv("MLRANGE_HOST", default="localhost")
 MLRANGE_PORT = os.getenv("MLRANGE_PORT", default=8088)
-MLRANGE_URI = f"ws://{MLRANGE_HOST}:{MLRANGE_PORT}/tv/ws"
+MLRANGE_WS_URI = f"ws://{MLRANGE_HOST}:{MLRANGE_PORT}/tv/ws"
+MLRANGE_HTTP_URI = f"http://{MLRANGE_HOST}:{MLRANGE_PORT}/tv"
 
 # RabbitMQ
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", default="localhost")

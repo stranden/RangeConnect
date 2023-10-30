@@ -30,7 +30,7 @@ async def mlrange_websocket():
 
         MegalinkMessageParser = services.megalink.message_parser.MegalinkMessageParser()
 
-        async with websockets.connect(settings.MLRANGE_URI) as websocket:
+        async with websockets.connect(settings.MLRANGE_WS_URI) as websocket:
             async for data in websocket:
                 await MegalinkMessageParser.message_parser(data)
             
