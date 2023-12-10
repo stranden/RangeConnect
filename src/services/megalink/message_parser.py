@@ -13,9 +13,10 @@ class MegalinkMessageParser:
             Publish = publisher.Publisher(settings.RABBITMQ_URI)
             if scoreEventType == "SHOT":
                 shotDict, athleteDict = await self.shot_event(message)
-                await Publish.publish_range_events(shotDict)
                 if not len(athleteDict) == 0:
                     await Publish.publish_range_events(athleteDict)
+                await Publish.publish_range_events(shotDict)
+                
             else:
                 logging.warning(f"Could not process event type - message: {str(message).rstrip()}")
         else:
