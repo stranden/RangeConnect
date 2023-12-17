@@ -9,9 +9,9 @@ services:
     restart: always
     environment:
       - RANGE_TYPE=megalink
-      - SIUSDATA_HOST=192.168.234.111
+      - SIUSDATA_HOST=192.168.234.118
       - SIUSDATA_PORT=4000
-      - MLRANGE_HOST=192.168.234.111
+      - MLRANGE_HOST=192.168.234.118
       - MLRANGE_PORT=8088
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_USER=rangeconnect

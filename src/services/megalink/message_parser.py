@@ -52,6 +52,8 @@ class MegalinkMessageParser:
                 eventDict['series_type'] = str("SIGHTERS")
             elif responseData['result'][0]['seriesType'] == "match":
                 eventDict['series_type'] = str("MATCH")
+            elif responseData['result'][0]['seriesType'] == "shootoff":
+                eventDict['series_type'] = str("SHOOTOFF")
 
             eventDict['shotValue'] = responseData['result'][0]['shots'][numberOfShots-1]['v']
             eventDict['shotValueDecimal'] = responseData['result'][0]['shots'][numberOfShots-1]['vd']
