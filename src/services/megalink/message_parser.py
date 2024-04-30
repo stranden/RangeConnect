@@ -28,6 +28,7 @@ class MegalinkMessageParser:
 
         eventDict = dict()
         eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
+        eventDict['shootingRangeType'] = str(settings.RANGE_TYPE).upper()
         eventDict['scoreEventType'] = str("SHOT")
         eventDict['firingPointID'] = str(eventData['params']['lane'])
 
@@ -65,6 +66,7 @@ class MegalinkMessageParser:
             shooterDict = dict()
             if not len(str(responseData['result'][0]['name']).strip()) == 0:
                 shooterDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
+                shooterDict['shootingRangeType'] = str(settings.RANGE_TYPE).upper()
                 shooterDict['scoreEventType'] = str("ATHLETE")
                 shooterDict['firingPointID'] = str(eventData['params']['lane'])
                 shooterDict['startNumber'] = responseData['result'][0]['startNr']

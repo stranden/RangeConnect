@@ -40,6 +40,7 @@ class SiusMessageParser:
             eventDict = dict()
             if int(eventData[3]) != 0:
                 eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
+                eventDict['shootingRangeType'] = str(settings.RANGE_TYPE).upper()
                 eventDict['scoreEventType'] = str("GROUP")
                 ##eventDict['laneID'] = int(eventData[1])
                 eventDict['firingPointID'] = str(eventData[2])
@@ -66,12 +67,13 @@ class SiusMessageParser:
             eventDict = dict()
             if int(eventData[3]) != 0:
                 eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
+                eventDict['shootingRangeType'] = str(settings.RANGE_TYPE).upper()
                 eventDict['scoreEventType'] = str("SHOOTER")
                 ##eventDict['laneID'] = int(eventData[1])
                 eventDict['firingPointID'] = str(eventData[2])
                 eventDict['shooterID'] = int(eventData[3])
-                eventDict['aRandomNumber'] = int(eventData[4])
-                eventDict['duplicate-shooterID'] = int(eventData[5])
+                #eventDict['aRandomNumber'] = int(eventData[4])
+                #eventDict['duplicate-shooterID'] = int(eventData[5])
                 logging.info(f"Processed SHOOTER (_SHID) event: {eventDict}")
             else:
                 logging.info(f"Skipped SHOOTER (_SHID) event on firingPointID {str(eventData[2])} because shooterID is 0")
@@ -83,6 +85,7 @@ class SiusMessageParser:
             eventDict = dict()
             if int(eventData[3]) != 0:
                 eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
+                eventDict['shootingRangeType'] = str(settings.RANGE_TYPE).upper()
                 eventDict['scoreEventType'] = str("NAME")
                 ##eventDict['laneID'] = int(eventData[1])
                 eventDict['firingPointID'] = str(eventData[2])
@@ -99,6 +102,7 @@ class SiusMessageParser:
             eventDict = dict()
             if int(eventData[3]) != 0:
                 eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
+                eventDict['shootingRangeType'] = str(settings.RANGE_TYPE).upper()
                 eventDict['scoreEventType'] = str("PRACTICE")
                 ##eventDict['laneID'] = int(eventData[1])
                 eventDict['firingPointID'] = str(eventData[2])
@@ -120,6 +124,7 @@ class SiusMessageParser:
             eventDict = dict()
             if int(eventData[3]) != 0:
                 eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
+                eventDict['shootingRangeType'] = str(settings.RANGE_TYPE).upper()
                 eventDict['scoreEventType'] = str("SHOT")
                 ##eventDict['laneID'] = int(eventData[1])
                 eventDict['firingPointID'] = str(eventData[2])
@@ -147,6 +152,7 @@ class SiusMessageParser:
             if int(eventData[3]) != 0:
                 if len(str.rstrip(eventData[5])) > 0:
                     eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
+                    eventDict['shootingRangeType'] = str(settings.RANGE_TYPE).upper()
                     eventDict['scoreEventType'] = str("NATION")
                     ##eventDict['laneID'] = int(eventData[1])
                     eventDict['firingPointID'] = str(eventData[2])
@@ -166,6 +172,7 @@ class SiusMessageParser:
             if int(eventData[3]) != 0:
                 if len(str.rstrip(eventData[5])) > 0:
                     eventDict['shootingRangeID'] = str(settings.SHOOTING_RANGE_ID)
+                    eventDict['shootingRangeType'] = str(settings.RANGE_TYPE).upper()
                     eventDict['scoreEventType'] = str("TEAM")
                     ##eventDict['laneID'] = int(eventData[1])
                     eventDict['firingPointID'] = str(eventData[2])
