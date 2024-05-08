@@ -9,25 +9,32 @@ class SiusMessageParser:
             Publish = publisher.Publisher(settings.RABBITMQ_URI)
             if scoreEventType == "_GRPH":
                 result = await self.group_event(message)
-                await Publish.publish_range_events(result)
+                if result:
+                    await Publish.publish_range_events(result)
             elif scoreEventType == "_SHID":
                 result = await self.shooter_event(message)
-                await Publish.publish_range_events(result)
+                if result:
+                    await Publish.publish_range_events(result)
             elif scoreEventType == "_NAME":
                 result = await self.name_event(message)
-                await Publish.publish_range_events(result)
+                if result:
+                    await Publish.publish_range_events(result)
             elif scoreEventType == "_PRCH":
                 result = await self.practice_event(message)
-                await Publish.publish_range_events(result)
+                if result:
+                    await Publish.publish_range_events(result)
             elif scoreEventType == "_SHOT":
                 result = await self.shot_event(message)
-                await Publish.publish_range_events(result)
+                if result:
+                    await Publish.publish_range_events(result)
             elif scoreEventType == "_SNAT":
-                result =  await self.nation_event(message)
-                await Publish.publish_range_events(result)
+                result = await self.nation_event(message)
+                if result:
+                    await Publish.publish_range_events(result)
             elif scoreEventType == "_TEAM":
                 result = await self.team_event(message)
-                await Publish.publish_range_events(result)
+                if result:
+                    await Publish.publish_range_events(result)
             else:
                 logging.warning(f"Could not process event type - message: {str(message).rstrip()}")
         else:
